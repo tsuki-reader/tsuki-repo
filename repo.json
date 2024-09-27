@@ -1,21 +1,21 @@
 {
     "name": "Tsuki Repo",
     "id": "tsuki-repo",
-    "logo": "https://github.com/tsuki-reader.png",
+    "logo": "https://github.com/tsuki-reader/tsuki-repo/blob/main/logo.png?raw=true",
     "manga_providers": [
         {
             "name": "Filesystem",
             "id": "filesystem",
-            "file": "path/to/manga_library.go",
-            "icon": "path/to/icon.png"
+            "file": "https://raw.githubusercontent.com/tsuki-reader/tsuki-repo/refs/heads/main/providers/shared/filesystem/filesystem.go",
+            "icon": "https://github.com/tsuki-reader/tsuki-repo/blob/main/providers/shared/filesystem/filesystem.png?raw=true"
         }
     ],
     "comic_providers" : [
         {
             "name": "Filesystem",
             "id": "filesystem",
-            "file": "path/to/comic_library.go",
-            "icon": "path/to/icon.png"
+            "file": "https://raw.githubusercontent.com/tsuki-reader/tsuki-repo/refs/heads/main/providers/shared/filesystem/filesystem.go",
+            "icon": "https://github.com/tsuki-reader/tsuki-repo/blob/main/providers/shared/filesystem/filesystem.png?raw=true"
         }
     ]
 }
