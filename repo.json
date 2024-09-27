@@ -1,0 +1,19 @@
+{
+    "name": "Tsuki Repo",
+    "id": "tsuki-repo",
+    "logo": "https://github.com/tsuki-reader.png",
+    "manga_providers": [
+        {
+            "name": "Filesystem",
+            "id": "filesystem",
+            "file": "path/to/manga_library.go"
+        }
+    ],
+    "comic_providers" : [
+        {
+            "name": "Filesystem",
+            "id": "filesystem",
+            "file": "path/to/comic_library.go"
+        }
+    ]
+}
