@@ -1,6 +1,12 @@
 package main
 
-import "github.com/tsuki-reader/nisshoku/providers"
+import (
+	"io/fs"
+	"path/filepath"
+	"strings"
+
+	"github.com/tsuki-reader/nisshoku/providers"
+)
 
 type FilesystemProvider struct {
 	libraryPath  string
@@ -23,7 +29,29 @@ func NewProvider(params providers.ProviderParams) providers.Provider {
 }
 
 func (p *FilesystemProvider) Search(query string) ([]providers.ProviderResult, error) {
-	panic("TODO")
+	var results []providers.ProviderResult
+
+	filepath.WalkDir(p.libraryPath, func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+
+		if d.IsDir() {
+			name := d.Name()
+			if strings.Contains(strings.ToLower(name), strings.ToLower(query)) {
+				var result = providers.ProviderResult{
+					Title:    name,
+					ID:       name,
+					Provider: "filesystem",
+				}
+				results = append(results, result)
+			}
+		}
+
+		return nil
+	})
+
+	return results, nil
 }
 
 func (p *FilesystemProvider) GetChapters(id string) ([]providers.Chapter, error) {
