@@ -6,14 +6,16 @@
         {
             "name": "Filesystem",
             "id": "filesystem",
-            "file": "path/to/manga_library.go"
+            "file": "path/to/manga_library.go",
+            "icon": "path/to/icon.png"
         }
     ],
     "comic_providers" : [
         {
             "name": "Filesystem",
             "id": "filesystem",
-            "file": "path/to/comic_library.go"
+            "file": "path/to/comic_library.go",
+            "icon": "path/to/icon.png"
         }
     ]
 }
