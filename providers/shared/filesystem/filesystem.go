@@ -1,8 +1,6 @@
 package main
 
 import (
-	"io/fs"
-	"path/filepath"
 	"strings"
 
 	"github.com/tsuki-reader/nisshoku/providers"
@@ -11,18 +9,20 @@ import (
 type FilesystemProvider struct {
 	libraryPath  string
 	providerType providers.ProviderType
+	context      providers.ProviderContext
 }
 
 // NewProvider must take an instance of ProviderParams and return a Provider
-func NewProvider(params providers.ProviderParams) providers.Provider {
+func NewProvider(context providers.ProviderContext) providers.Provider {
 	var provider FilesystemProvider
 
-	provider.providerType = params.ProviderType
+	provider.context = context
+	provider.providerType = context.ProviderType
 	switch provider.providerType {
 	case providers.Comic:
-		provider.libraryPath = params.ComicLibraryPath
+		provider.libraryPath = context.ComicLibraryPath
 	case providers.Manga:
-		provider.libraryPath = params.MangaLibraryPath
+		provider.libraryPath = context.MangaLibraryPath
 	}
 
 	return &provider
@@ -31,25 +31,24 @@ func NewProvider(params providers.ProviderParams) providers.Provider {
 func (p *FilesystemProvider) Search(query string) ([]providers.ProviderResult, error) {
 	var results []providers.ProviderResult
 
-	filepath.WalkDir(p.libraryPath, func(path string, d fs.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
+	files, err := p.context.WalkLibrary(p.libraryPath)
+	if err != nil {
+		return []providers.ProviderResult{}, err
+	}
 
-		if d.IsDir() {
-			name := d.Name()
-			if strings.Contains(strings.ToLower(name), strings.ToLower(query)) {
-				var result = providers.ProviderResult{
-					Title:    name,
-					ID:       name,
-					Provider: "filesystem",
-				}
-				results = append(results, result)
+	for _, f := range files {
+		if strings.Contains(strings.ToLower(f.Name), strings.ToLower(query)) {
+			result := providers.ProviderResult{
+				Title:            f.Name,
+				ID:               f.Fullpath,
+				Provider:         "filesystem",
+				AlternativeNames: []string{},
+				StartYear:        0,
 			}
-		}
 
-		return nil
-	})
+			results = append(results, result)
+		}
+	}
 
 	return results, nil
 }
