@@ -37,7 +37,7 @@ func (p *FilesystemProvider) Search(query string) ([]providers.ProviderResult, e
 	}
 
 	for _, f := range files {
-		if strings.Contains(strings.ToLower(f.Name), strings.ToLower(query)) {
+		if f.IsDir && strings.Contains(strings.ToLower(f.Name), strings.ToLower(query)) {
 			result := providers.ProviderResult{
 				Title:            f.Name,
 				ID:               f.Fullpath,
