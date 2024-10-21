@@ -54,7 +54,27 @@ func (p *FilesystemProvider) Search(query string) ([]providers.ProviderResult, e
 }
 
 func (p *FilesystemProvider) GetChapters(id string) ([]providers.Chapter, error) {
-	panic("TODO")
+	var results []providers.Chapter
+
+	chapterDirs, err := p.context.WalkLibrary(id)
+	if err != nil {
+		return []providers.Chapter{}, err
+	}
+
+	for i, chapterDir := range chapterDirs {
+		if chapterDir.IsDir {
+			chapter := providers.Chapter{
+				Title:          chapterDir.Name,
+				ID:             chapterDir.Fullpath,
+				Provider:       "filesystem",
+				Chapter:        chapterDir.Name,
+				AbsoluteNumber: i,
+			}
+			results = append(results, chapter)
+		}
+	}
+
+	return results, nil
 }
 
 func (p *FilesystemProvider) GetChapterPages(id string) ([]providers.Page, error) {
