@@ -67,7 +67,6 @@ func (p *FilesystemProvider) GetChapters(id string) ([]providers.Chapter, error)
 				Title:          chapterDir.Name,
 				ID:             chapterDir.Fullpath,
 				Provider:       "filesystem",
-				Chapter:        chapterDir.Name,
 				AbsoluteNumber: i,
 			}
 			results = append(results, chapter)
