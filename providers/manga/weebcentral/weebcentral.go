@@ -43,7 +43,7 @@ func (p *WeebcentralProvider) Search(query string) ([]providers.ProviderResult, 
 	results := []providers.ProviderResult{}
 	for i := range articles.Nodes {
 		article := articles.Eq(i)
-		header := article.Find("section.hidden > div.text-lg > a")
+		header := article.Find("section.hidden > div.text-lg > span > a")
 		title := header.Text()
 		resultUrl, _ := header.Attr("href")
 		id, err := p.extractId(resultUrl)
