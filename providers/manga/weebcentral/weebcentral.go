@@ -83,7 +83,7 @@ func (p *WeebcentralProvider) GetChapters(id string) ([]providers.Chapter, error
 		return []providers.Chapter{}, err
 	}
 
-	anchors := doc.Find("body > a.flex")
+	anchors := doc.Find("body a")
 	count := len(anchors.Nodes)
 	results := []providers.Chapter{}
 	for i := range anchors.Nodes {
